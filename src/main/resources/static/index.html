@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NikoFinance - Controle Financeiro Pessoal</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app">
+        <header class="header">
+            <div class="header-content">
+                <h1 class="logo">💰 NikoFinance</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="btn-new-transaction">Nova Transação</button>
+                </div>
+            </div>
+        </header>
+
+        <main class="main">
+            <section class="dashboard-section">
+                <div class="dashboard-cards">
+                    <div class="card card-income">
+                        <div class="card-icon">📈</div>
+                        <div class="card-info">
+                            <span class="card-label">Total de Receitas</span>
+                            <span class="card-value" id="total-income">R$ 0,00</span>
+                        </div>
+                    </div>
+                    <div class="card card-expense">
+                        <div class="card-icon">📉</div>
+                        <div class="card-info">
+                            <span class="card-label">Total de Despesas</span>
+                            <span class="card-value" id="total-expense">R$ 0,00</span>
+                        </div>
+                    </div>
+                    <div class="card card-balance">
+                        <div class="card-icon">💰</div>
+                        <div class="card-info">
+                            <span class="card-label">Saldo Atual</span>
+                            <span class="card-value" id="balance">R$ 0,00</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="filters-section">
+                <div class="filters">
+                    <div class="filter-group">
+                        <label for="filter-type">Tipo</label>
+                        <select id="filter-type" class="filter-select">
+                            <option value="">Todos</option>
+                            <option value="INCOME">Receitas</option>
+                            <option value="EXPENSE">Despesas</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filter-category">Categoria</label>
+                        <select id="filter-category" class="filter-select">
+                            <option value="">Todas</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filter-start-date">Data Início</label>
+                        <input type="date" id="filter-start-date" class="filter-input">
+                    </div>
+                    <div class="filter-group">
+                        <label for="filter-end-date">Data Fim</label>
+                        <input type="date" id="filter-end-date" class="filter-input">
+                    </div>
+                    <div class="filter-group">
+                        <button class="btn btn-secondary" id="btn-apply-filters">Filtrar</button>
+                        <button class="btn btn-secondary" id="btn-clear-filters">Limpar</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="transactions-section">
+                <div class="section-header">
+                    <h2>Transações</h2>
+                    <span class="transactions-count" id="transactions-count">0 transações</span>
+                </div>
+                <div class="table-container">
+                    <table id="transactions-table" class="transactions-table">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Tipo</th>
+                                <th>Descrição</th>
+                                <th>Categoria</th>
+                                <th>Valor</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="transactions-body">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="empty-state" id="empty-state" style="display: none;">
+                    <p>Nenhuma transação encontrada</p>
+                    <button class="btn btn-primary" id="btn-first-transaction">Adicionar primeira transação</button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div class="modal-overlay" id="modal-overlay">
+        <div class="modal" id="transaction-modal">
+            <div class="modal-header">
+                <h3 id="modal-title">Nova Transação</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <form id="transaction-form" class="modal-form">
+                <input type="hidden" id="transaction-id">
+                <div class="form-group">
+                    <label for="transaction-type">Tipo *</label>
+                    <select id="transaction-type" required>
+                        <option value="INCOME">Receita</option>
+                        <option value="EXPENSE">Despesa</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="transaction-amount">Valor *</label>
+                    <input type="number" id="transaction-amount" step="0.01" min="0.01" required placeholder="0,00">
+                </div>
+                <div class="form-group">
+                    <label for="transaction-description">Descrição *</label>
+                    <input type="text" id="transaction-description" maxlength="255" required placeholder="Ex: Salário, Supermercado...">
+                </div>
+                <div class="form-group">
+                    <label for="transaction-category">Categoria</label>
+                    <select id="transaction-category">
+                        <option value="">Selecione uma categoria</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="transaction-date">Data *</label>
+                    <input type="date" id="transaction-date" required>
+                </div>
+                <div class="form-group">
+                    <label for="transaction-notes">Observação</label>
+                    <textarea id="transaction-notes" maxlength="500" rows="3" placeholder="Observações adicionais..."></textarea>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" id="btn-cancel">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toast-container"></div>
+
+    <script src="js/api.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
